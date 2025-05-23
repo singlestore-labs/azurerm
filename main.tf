@@ -292,16 +292,27 @@ resource "azurerm_kubernetes_cluster" "main" {
       skip_nodes_with_system_pods      = var.auto_scaler_profile_skip_nodes_with_system_pods
     }
   }
-  dynamic "azure_active_directory_role_based_access_control" {
-    for_each = var.role_based_access_control_enabled && var.rbac_aad ? ["rbac"] : []
+  # dynamic "azure_active_directory_role_based_access_control" {
+  #   for_each = var.role_based_access_control_enabled && var.rbac_aad ? ["rbac"] : []
+
+  #   content {
+  #     admin_group_object_ids = var.rbac_aad_admin_group_object_ids
+  #     azure_rbac_enabled     = var.rbac_aad_azure_rbac_enabled
+  #     tenant_id              = var.rbac_aad_tenant_id
+  #   }
+  # }
+
+    dynamic "azure_active_directory_role_based_access_control" {
+    for_each = var.role_based_access_control_enabled && var.rbac_aad && var.rbac_aad_managed ? ["rbac"] : []
 
     content {
       admin_group_object_ids = var.rbac_aad_admin_group_object_ids
       azure_rbac_enabled     = var.rbac_aad_azure_rbac_enabled
+      managed                = true
       tenant_id              = var.rbac_aad_tenant_id
-      managed                = var.rbac_aad_managed
     }
   }
+
   dynamic "confidential_computing" {
     for_each = var.confidential_computing == null ? [] : [var.confidential_computing]
 
