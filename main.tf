@@ -299,6 +299,7 @@ resource "azurerm_kubernetes_cluster" "main" {
       admin_group_object_ids = var.rbac_aad_admin_group_object_ids
       azure_rbac_enabled     = var.rbac_aad_azure_rbac_enabled
       tenant_id              = var.rbac_aad_tenant_id
+      managed                = var.rbac_aad_managed
     }
   }
   dynamic "confidential_computing" {

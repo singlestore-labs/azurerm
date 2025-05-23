@@ -1428,6 +1428,11 @@ variable "role_based_access_control_enabled" {
   nullable    = false
 }
 
+variable "rbac_aad_managed" {
+  type        = bool
+  default     = false
+  description = "(Optional) Is Azure Active Directory integration enabled? This is only used when `rbac_aad` is set to `true`."
+}
 variable "run_command_enabled" {
   type        = bool
   default     = true
